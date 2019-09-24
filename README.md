@@ -1,2 +1,10 @@
-# module-acl
-Acess Control List module for DVelum ORM
+ACL module
+======
+
+DVelum platform module
+
+GNU General Public License version 3.0
+
+Installation
+-------
+composer require dvelum/module-acl
