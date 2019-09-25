@@ -40,7 +40,7 @@ class Acl extends Controller
         $files = File::scanFiles('./modules/dvelum/module-acl/classes/Dvelum/App/Acl', ['.php'], true, File::FILES_ONLY);
         foreach ($files as $v) {
             $path = str_replace(['./modules/dvelum/module-acl/classes/'], [''], $v);
-            $name = Utils::classFromPath($path);
+            $name = Utils::classFromPath($path, true);
             $list[] = ['id' => $name, 'title' => $name];
         }
         $this->response->success($list);
