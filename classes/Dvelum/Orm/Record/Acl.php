@@ -107,7 +107,7 @@ abstract class Acl
         $cfg = $config->getConfig();
 
         if($cfg->offsetExists('acl') && !empty($cfg->get('acl'))){
-            $class = Acl::factory($cfg->get('acl'));
+            $class = $cfg->get('acl');
         }else{
             return null;
         }
