@@ -106,7 +106,7 @@ class AclRecord extends Record
     public function setId($id): void
     {
         if ($this->acl && !$this->disableAclCheck) {
-            $this->checkCanEdit();
+            $this->checkCanCreate();
         }
         parent::setId($id);
     }
@@ -119,7 +119,10 @@ class AclRecord extends Record
      */
     public function set(string $name, $value): bool
     {
-        if ($this->acl) {
+        if ($this->acl && !$this->getId()) {
+            $this->checkCanCreate();
+        }
+        if ($this->acl && $this->getId()) {
             $this->checkCanEdit();
         }
         return parent::set($name, $value);
