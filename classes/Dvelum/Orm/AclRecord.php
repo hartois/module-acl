@@ -36,18 +36,18 @@ class AclRecord extends Record
      */
     protected $disableAclCheck = false;
 
-
-    public function __construct(string $name, $id = false)
-    {
-        parent::__construct($name, $id);
-
-        $this->initAcl();
-
-        if (!$this->id) {
-            if ($this->acl && !$this->disableAclCheck) {
-                $this->checkCanCreate();
-            }
-        }
+    /**
+     * Factory method of object creation is preferable to use, cf. method  __construct() description
+     * @param string $name
+     * @param int|int[]|bool $id , optional default false
+     * @param string|bool $shard
+     * @throws \Exception
+     * @return RecordInterface|RecordInterface[]
+     */
+    public static function factory(string $name, $id = false, $shard = false){
+        $o = parent::factory($name, $id, $shard);
+        $o->initAcl();
+        return $o;
     }
 
     /**
@@ -58,6 +58,10 @@ class AclRecord extends Record
         $acl = Acl::factory($this->config);
         if(!empty($acl)){
             $this->acl = $acl;
+
+            if (!$this->id && !$this->preFactory) {
+                $this->checkCanCreate();
+            }
         }
     }
 
